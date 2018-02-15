@@ -3,7 +3,63 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromEvent';
 
-declare var jQuery: any;
+
+export class Modal {
+    options
+    body
+    element
+    isShown
+    height
+    width
+    constructor(element, options) {
+      this.options = options;
+      this.body = document.body;
+      this.element = element;
+      this.isShown = null;
+      this.height = options.height;
+      this.width = options.width;
+    };
+    center(): void {
+      this.element.style.left = window.innerWidth / 2 - this.element.getBoundingClientRect().width / 2;
+    }
+    toggle(target): void {
+      return this.isShown ? this.hide() : this.show(target);
+    }
+    show(target?): void {
+      (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'hidden';
+      (<HTMLElement>document.body).style.overflow = 'hidden';
+      var self = this;
+      if (this.isShown) return;
+      this.isShown = true;
+      this.element.style.display = 'block';
+      var div = document.createElement('div');
+      div.className = 'modal-backdrop in';
+      div.id = 'modal-backdrop';
+      let onclick = function(e: any) { 
+        e = window.event || e; 
+        if(this === e.target) {
+          self.hide();
+        }
+      };
+      div.onclick = onclick;
+      this.element.addEventListener('click', onclick);
+      document.body.appendChild(div);
+      this.center();
+  
+    }
+    hide(): void {
+      (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'auto';
+      (<HTMLElement>document.body).style.overflow = 'auto';
+      var self = this;
+      if (!this.isShown) return;
+      this.isShown = false;
+      this.element.style.display = 'none';
+      let el = document.querySelector(".modal-backdrop");
+      if (el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    }
+}
 
 export class ModalInstance {
 
@@ -17,7 +73,7 @@ export class ModalInstance {
     result: any;
     visible: boolean = false;
 
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef, private modal?: Modal) {
         this.init();
     }
 
@@ -37,32 +93,35 @@ export class ModalInstance {
 
     destroy(): Promise<any> {
         return this.hide().then(() => {
-            if (this.$modal) {
-                this.$modal.data('bs.modal', null);
-                this.$modal.remove();
-            }
+            // ils nod
         });
     }
 
-    private show() {
+    private show(): Promise<any> {
         let promise = toPromise(this.shown);
         this.resetData();
-        this.$modal.modal();
-        return promise;
+        this.modal.show();
+        // this.$modal.modal();
+        // return promise;
+        return Promise.resolve();
     }
 
     private hide(): Promise<ModalResult> {
-        if (this.$modal && this.visible) {
+        if (this.modal.isShown) {
             let promise = toPromise(this.hidden);
-            this.$modal.modal('hide');
+            // this.$modal.modal('hide');
+            this.modal.hide();
             return promise;
         }
+        // if (this.$modal && this.visible) {
+        // }
         return Promise.resolve(this.result);
     }
 
     private init() {
-        this.$modal = jQuery(this.element.nativeElement);
-        this.$modal.appendTo('body');
+        this.$modal = this.element.nativeElement;
+        this.modal = new Modal(this.$modal, {});
+        // this.$modal.appendTo('body');
 
         this.shown = Observable.fromEvent(this.$modal, this.shownEventName)
             .map(() => {
@@ -82,9 +141,9 @@ export class ModalInstance {
     }
 
     private resetData() {
-        this.$modal.removeData();
-        this.$modal.data('backdrop', booleanOrValue(this.$modal.attr('data-backdrop')));
-        this.$modal.data('keyboard', booleanOrValue(this.$modal.attr('data-keyboard')));
+        // this.$modal.removeData();
+        // this.$modal.data('backdrop', booleanOrValue(this.$modal.attr('data-backdrop')));
+        // this.$modal.data('keyboard', booleanOrValue(this.$modal.attr('data-keyboard')));
     }
 }
 

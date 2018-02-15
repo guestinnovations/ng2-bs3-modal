@@ -70,18 +70,25 @@ export class ModalComponent implements OnDestroy {
 
     open(size?: string): Promise<void> {
         if (ModalSize.validSize(size)) this.overrideSize = size;
+        (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'hidden';
+        (<HTMLElement>document.body).style.overflow = 'hidden';
         return this.instance.open().then(() => {
             this.visible = this.instance.visible;
+            this.onOpen.emit();
         });
     }
 
     close(value?: any): Promise<void> {
+        (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'auto';
+        (<HTMLElement>document.body).style.overflow = 'auto';
         return this.instance.close().then(() => {
             this.onClose.emit(value);
         });
     }
 
     dismiss(): Promise<void> {
+        (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'auto';
+        (<HTMLElement>document.body).style.overflow = 'auto';
         return this.instance.dismiss();
     }
 
