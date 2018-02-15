@@ -3,6 +3,21 @@
   "version": "0.10.4",
   "description": "Angular2 Boostrap3 Modal Component",
   "main": "ng2-bs3-modal.js",
+  "scripts": {
+    "start": "static",
+    "peer": "npm install es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.14",
+    "lint": "tslint ./src/**/*.ts",
+    "clean": "rimraf bundles components directives **/*.ngfactory.ts ng2-bs3-modal.* ",
+    "tsc": "ngc -p .",
+    "tsc:single": "tsc -p tsconfig.bundle.json",
+    "uglify": "uglifyjs ./bundles/ng2-bs3-modal.js --output ./bundles/ng2-bs3-modal.min.js",
+    "bundle": "npm run tsc:single && npm run uglify",
+    "build": "npm run clean && npm run typings && npm run lint && npm run tsc && npm run bundle",
+    "prepublish": "npm run build",
+    "typings": "typings install",
+    "test": "karma start",
+    "test:w": "karma start --no-single-run"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/dougludlow/ng2-bs3-modal.git"
