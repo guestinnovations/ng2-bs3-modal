@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromEvent';
 
-
 export class Modal {
     options
     body
@@ -25,7 +24,7 @@ export class Modal {
     toggle(target): void {
       return this.isShown ? this.hide() : this.show(target);
     }
-    show(target?): void {
+    show(target): void {
       (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'hidden';
       (<HTMLElement>document.body).style.overflow = 'hidden';
       var self = this;
@@ -45,7 +44,6 @@ export class Modal {
       this.element.addEventListener('click', onclick);
       document.body.appendChild(div);
       this.center();
-  
     }
     hide(): void {
       (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'auto';
@@ -73,7 +71,7 @@ export class ModalInstance {
     result: any;
     visible: boolean = false;
 
-    constructor(private element: ElementRef, private modal?: Modal) {
+    constructor(private element: ElementRef, private modal: Modal) {
         this.init();
     }
 
