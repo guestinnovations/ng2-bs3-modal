@@ -1,24 +1,22 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "target": "es5",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "inlineSourceMap": true,
-        "declaration": true,
-        "outDir": "",
-        "rootDir": "./src/ng2-bs3-modal"
-    },
-    "exclude": [
-        "node_modules",
-        "demo",
-        "bundles",
-        "components",
-        "directives",
-        "src/test",
-        "**/*.spec.ts",
-        "../../../node_modules",
-        "typings"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
     ]
+  }
 }
