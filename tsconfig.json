@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "bs3-modal": [
+        "dist/ng2-bs3-modal"
+      ],
+      "bs3-modal/*": [
+        "dist/ng2-bs3-modal/*"
+      ]
+    }
   }
 }
