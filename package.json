@@ -3,6 +3,9 @@
   "version": "0.10.4",
   "description": "Angular2 Boostrap3 Modal Component",
   "main": "ng2-bs3-modal.js",
+  "scripts": {
+    "build": "npm run clean && ngc && ng-packagr -p package.json",
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/dougludlow/ng2-bs3-modal.git"
