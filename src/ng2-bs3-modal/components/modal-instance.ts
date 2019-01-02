@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromEvent';
+import { Observable, fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 export class Modal {
     options
@@ -24,7 +24,7 @@ export class Modal {
     toggle(target): void {
       return this.isShown ? this.hide() : this.show(target);
     }
-    show(target): void {
+    show(target?): void {
       (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'hidden';
       (<HTMLElement>document.body).style.overflow = 'hidden';
       var self = this;
@@ -44,6 +44,7 @@ export class Modal {
       this.element.addEventListener('click', onclick);
       document.body.appendChild(div);
       this.center();
+  
     }
     hide(): void {
       (<HTMLElement>document.querySelector('.app-container')).style.overflow = 'auto';
@@ -71,7 +72,7 @@ export class ModalInstance {
     result: any;
     visible: boolean = false;
 
-    constructor(private element: ElementRef, private modal: Modal) {
+    constructor(private element: ElementRef, private modal?: Modal) {
         this.init();
     }
 
@@ -121,13 +122,13 @@ export class ModalInstance {
         this.modal = new Modal(this.$modal, {});
         // this.$modal.appendTo('body');
 
-        this.shown = Observable.fromEvent(this.$modal, this.shownEventName)
-            .map(() => {
+        this.shown = fromEvent(this.$modal, this.shownEventName).pipe(
+            map(() => {
                 this.visible = true;
-            });
+            }));
 
-        this.hidden = Observable.fromEvent(this.$modal, this.hiddenEventName)
-            .map(() => {
+        this.hidden = fromEvent(this.$modal, this.hiddenEventName).pipe(
+            map(() => {
                 let result = (!this.result || this.result === ModalResult.None)
                     ? ModalResult.Dismiss : this.result;
 
@@ -135,7 +136,7 @@ export class ModalInstance {
                 this.visible = false;
 
                 return result;
-            });
+            }));
     }
 
     private resetData() {

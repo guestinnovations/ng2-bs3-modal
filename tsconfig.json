@@ -1,15 +1,14 @@
 {
     "compilerOptions": {
-        "target": "es3",
         "module": "commonjs",
         "moduleResolution": "node",
+        "target": "es5",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "inlineSourceMap": true,
         "declaration": true,
         "outDir": "",
-        "rootDir": "./src/ng2-bs3-modal",
-        "lib": ["es2015", "dom"]
+        "rootDir": "./src/ng2-bs3-modal"
     },
     "exclude": [
         "node_modules",
@@ -18,6 +17,8 @@
         "components",
         "directives",
         "src/test",
-        "**/*.spec.ts"
+        "**/*.spec.ts",
+        "../../../node_modules",
+        "typings"
     ]
 }

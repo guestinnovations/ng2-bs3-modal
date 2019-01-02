@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
-        "module": "system",
+        "target": "es3",
+        "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es5",
-        "noImplicitAny": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "inlineSourceMap": true,
-        "declaration": false,
-        "rootDir": "./src",
-        "outFile": "./bundles/ng2-bs3-modal.js"
+        "declaration": true,
+        "outDir": "",
+        "rootDir": "./src/ng2-bs3-modal",
+        "lib": ["es2015", "dom"]
     },
     "exclude": [
         "node_modules",
@@ -18,6 +18,8 @@
         "components",
         "directives",
         "src/test",
-        "**/*.spec.ts"
+        "**/*.spec.ts",
+        "../../../node_modules",
+        "typings"
     ]
 }
